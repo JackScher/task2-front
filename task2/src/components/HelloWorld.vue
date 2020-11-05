@@ -2,7 +2,7 @@
   <div class="hello">
 <!--    <h1>{{ msg }}</h1>-->
 
-    <form @submit.prevent="login_method">
+    <form @submit.prevent="login_method_1">
       <input type="text" id="username" v-model="username" name="username">
       <input type="text" id="password" v-model="password" name="password">
       <button>Auth</button>
@@ -26,7 +26,7 @@ export default {
   // },
   methods: {
     login_method() {
-      axios.post('http://127.0.0.1:8000/auth/', {
+      axios.post('http://127.0.0.1:8000/rest-auth/login/', {
         username: this.username,
         password: this.password,
       }).then(res => {
@@ -41,7 +41,24 @@ export default {
             console.log('not registered user');
             }
           );
-
+    },
+    login_method_1() {
+      axios.post('http://127.0.0.1:8000/rest-auth/login/', {
+        username: this.username,
+        password: this.password,
+      }).then(res => {
+            this.token=res.data.token;
+            localStorage.setItem('user-token', res.data.token)
+            console.log('user')
+            console.log(res.data)
+          }
+      ).catch( err => {
+            localStorage.removeItem('user-token')
+            this.token = null
+            console.log('Error: ', err);
+            console.log('not registered user');
+          }
+      );
     }
   },
 }
