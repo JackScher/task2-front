@@ -6,6 +6,8 @@
     <Register/>
     <br>
     <Conf/>
+    <br>
+    <Google/>
   </div>
 </template>
 
@@ -14,13 +16,15 @@
 import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
 import Conf from '@/components/Conf.vue'
+import Google from '@/components/Google.vue'
 
 export default {
   name: 'Home',
   components: {
     Login,
     Register,
-    Conf
+    Conf,
+    Google
   }
 }
 </script>
