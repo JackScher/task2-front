@@ -8,6 +8,8 @@
     <Conf/>
     <br>
     <Google/>
+    <br>
+    <Linkedin/>
   </div>
 </template>
 
@@ -17,6 +19,7 @@ import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
 import Conf from '@/components/Conf.vue'
 import Google from '@/components/Google.vue'
+import Linkedin from '@/components/Linkedin.vue'
 
 export default {
   name: 'Home',
@@ -24,7 +27,8 @@ export default {
     Login,
     Register,
     Conf,
-    Google
+    Google,
+    Linkedin
   }
 }
 </script>
