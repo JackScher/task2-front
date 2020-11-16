@@ -18,22 +18,21 @@ export default {
   data() {
     return{
       email: '',
-      password: ''
+      password: '',
+      token: null
     }
   },
-  // props: {
-  //   msg: String
-  // },
   methods: {
     login_method() {
       axios.post('http://127.0.0.1:8000/rest-auth/login/', {
         email: this.email,
         password: this.password,
       }).then(res => {
-            this.token=res.data.token;
-            localStorage.setItem('user-token', res.data.token)
+            localStorage.setItem('user-token', res.data.key)
+            this.token = res.data.key
+            this.$emit('TokenWasSet', this.token)
             console.log('user')
-            console.log(res.data)
+            // console.log(res.data)
           }
       ).catch( err => {
             localStorage.removeItem('user-token')

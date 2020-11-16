@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Confirm from '../views/Confirm.vue'
+import LogedIn from "@/views/LogedIn";
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/verify-email',
     name: 'Confirm',
     component: Confirm
+  },
+  {
+    path: '/logedin',
+    name: 'LogedIn',
+    component: LogedIn
   },
 ]
 
