@@ -8,6 +8,7 @@
     <p>Updated: {{question[0].date_update}}</p>
     <p>Username: {{this.username}}</p>
     <button type="submit">Close</button>
+    <hr>
   </form>
 
 </template>
@@ -29,11 +30,10 @@ export default {
       this.$emit('CloseDetails', this.item)
     },
     get_username() {
-      console.log(this.question[0].user_id)
-      axios.get(`http://127.0.0.1:8000/rest-auth/api/users/?id=${this.question[0].user_id}`, {
-        token: 
+      axios.get(`http://127.0.0.1:8000/rest-auth/api/users/?id=${this.question[0].user_id}`, {})
+      .then(res => {
+        this.username = res.data[0].username
       })
-      .then(res => res.data)
       .catch(err => console.log(err))
     }
   },

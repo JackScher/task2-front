@@ -8,13 +8,8 @@
   <br>
   <br>
 
-    <div v-for="question_item in questions" :key="question_item.id" @click="question_detail(question_item.id)">
-      <hr>
-      title: {{question_item.title}}<br>
-      content: {{question_item.body}}<br>
-      date: {{question_item.date_create}}
-      <hr>
-    </div>
+
+  <QuestionList @GetCurrentQuestion="SetQuestion" v-if="!question"/>
 
   <br>
   <br>
@@ -34,49 +29,27 @@
 <script>
 import axios  from 'axios';
 import QuestionDetails from "@/components/QuestionDetails";
+import QuestionList from "@/components/QuestionList";
+
 
 export default {
   name: "Chat",
   components: {
-    QuestionDetails
+    QuestionDetails,
+    QuestionList
   },
   data() {
     return{
       question: null,
-      questions: null,
-      user_id: null,
 
+      user_id: null,
       title: null,
       body: null,
 
-      question_id_check: null,
-      question_details: null
     }
   },
   props: ['token'],
-  mounted() {
-    this.get_questions();
-  },
   methods: {
-    get_questions() {
-        axios.get('http://127.0.0.1:8000/questions/api/questions/', {})
-        .then(res => {
-          const questions = res.data;
-          this.questions = questions
-        })
-        .catch(err => console.log(err))
-    },
-
-
-    get_current_question(id) {
-      axios.get(`http://127.0.0.1:8000/questions/api/questions/?id=${id}`)
-      .then(res => {
-        this.question = res.data
-        console.log(this.question)
-      })
-      .catch(err => console.log(err))
-    },
-
     create_new_question() {
       let id = 1                  // after confirmation fix will be completed
       axios.post('http://127.0.0.1:8000/questions/api/questions/', {
@@ -88,8 +61,8 @@ export default {
       .then(res => console.log(res))
       .catch(err => console.log(err))
     },
-    question_detail(id) {
-      this.get_current_question(id)
+    SetQuestion(question) {
+      this.question = question
     },
     close_question_details(item) {
       this.question = item

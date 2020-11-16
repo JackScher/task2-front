@@ -45,7 +45,6 @@ export default {
   methods: {
     SetToken(token) {
       this.token = token;
-      // console.log('it`s token: '+this.token);
     }
   }
 }
