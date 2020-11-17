@@ -19,7 +19,8 @@ export default {
     return{
       email: '',
       password: '',
-      token: null
+      token: null,
+      user_id: null
     }
   },
   methods: {
@@ -28,11 +29,11 @@ export default {
         email: this.email,
         password: this.password,
       }).then(res => {
-            localStorage.setItem('user-token', res.data.key)
             this.token = res.data.key
-            this.$emit('TokenWasSet', this.token)
-            console.log('user')
-            // console.log(res.data)
+            this.user_id = res.data.user.id
+            // localStorage.setItem('user-token', this.token)
+            // localStorage.setItem('user-id', this.user_id)
+            this.$emit('TokenWasSet', this.token, this.user_id)
           }
       ).catch( err => {
             localStorage.removeItem('user-token')

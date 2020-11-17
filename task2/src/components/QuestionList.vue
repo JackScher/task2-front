@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>List</h1>
+    <h1>Question list: </h1>
     <div v-for="question_item in questions" :key="question_item.id" @click="get_current_question(question_item.id)">
       <hr>
       title: {{question_item.title}}<br>

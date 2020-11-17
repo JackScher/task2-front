@@ -14,7 +14,7 @@
     <br>
     <br>
     <br>
-    <Chat :token="token"/>
+    <Chat :token="token" :u_id="user_id"/>
   </div>
 </template>
 
@@ -39,12 +39,16 @@ export default {
   },
   data() {
     return{
-      token: null
+      token: null,
+      user_id: null
     }
   },
   methods: {
-    SetToken(token) {
+    SetToken(token, user_id) {
       this.token = token;
+      this.user_id = user_id;
+      // console.log(this.token);
+      // console.log(this.user_id)
     }
   }
 }

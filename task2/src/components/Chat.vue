@@ -48,15 +48,16 @@ export default {
 
     }
   },
-  props: ['token'],
+  props: ['token', 'u_id'],
   methods: {
     create_new_question() {
       let id = 1                  // after confirmation fix will be completed
       axios.post('http://127.0.0.1:8000/questions/api/questions/', {
-        token: this.token,
+        // 'Auth-Token': this.token,
+        Token: this.token,
         title: this.title,
         body: this.body,
-        user_id: id
+        user_id: this.user_id
       })
       .then(res => console.log(res))
       .catch(err => console.log(err))

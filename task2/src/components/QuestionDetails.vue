@@ -1,28 +1,42 @@
 <template>
+  <div class="body">
+    <div v-if="!answer_details">
+      <form @submit.prevent="close_details">
+        <h2>It`s question details</h2>
+        <p>Title: {{question[0].title}}</p>
+        <p>Content: {{question[0].body}}</p>
+        <p v-if="question[0].date_update===question[0].date_create">Date: {{question[0].date_create}}</p>
+        <p v-if="question[0].date_update!==question[0].date_create">Updated: {{question[0].date_update}}</p>
+        <p>Name: {{this.username}}</p>
+        <button type="submit">Close</button>
+        <hr>
+      </form>
+      <br>
+      <br>
+        <AnswersList :question_id="question[0].id" @GetCurrentAnswer="get_current_answer"/>
+    </div>
 
-  <form @submit.prevent="close_details">
-    <h2>It`s question details</h2>
-    <p>Title: {{question[0].title}}</p>
-    <p>Content: {{question[0].body}}</p>
-    <p>Created: {{question[0].date_create}}</p>
-    <p>Updated: {{question[0].date_update}}</p>
-    <p>Username: {{this.username}}</p>
-    <button type="submit">Close</button>
-    <hr>
-  </form>
-
+    <AnswerDetails v-if="answer_details" @CloseAnswer="close_answer_detail" :current_answer="answer_details"/>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
+import AnswersList from "@/components/AnswersList";
+import AnswerDetails from "@/components/AnswerDetails";
 
 export default {
   name: "QuestionDetails",
+  components: {
+    AnswersList,
+    AnswerDetails
+  },
   props: ['question'],
   data() {
     return{
       item: null,
-      username: null
+      username: null,
+      answer_details: null
     }
   },
   methods: {
@@ -35,6 +49,13 @@ export default {
         this.username = res.data[0].username
       })
       .catch(err => console.log(err))
+    },
+    get_current_answer(answer_detail_list) {
+      this.answer_details = answer_detail_list
+      // console.log(answer_detail_list)
+    },
+    close_answer_detail(item) {
+      this.answer_details = item
     }
   },
   mounted() {
