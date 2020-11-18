@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-<!--    <img alt="Vue logo" src="../assets/logo.png">-->
+    <h3>Authentication: </h3>
     <Login @TokenWasSet="SetToken"/>
     <br>
+    <hr>
+    <h3>Registration: </h3>
     <Register/>
     <br>
-    <Conf/>
+<!--    <Conf/>-->
     <br>
 <!--    <Google/>-->
 <!--    <br>-->
@@ -15,6 +17,8 @@
     <br>
     <br>
     <Chat :token="token" :u_id="user_id"/>
+
+<!--      <Chat/>-->
   </div>
 </template>
 
@@ -25,7 +29,8 @@ import Register from '@/components/Register.vue'
 import Conf from '@/components/Conf.vue'
 import Google from '@/components/Google.vue'
 import Linkedin from '@/components/Linkedin.vue'
-import Chat from '@/components/Chat.vue'
+// import Chat from '@/components/Chat.vue'
+import Chat from '@/components/Chat/Chat-v-2.vue'
 
 export default {
   name: 'Home',
@@ -47,8 +52,6 @@ export default {
     SetToken(token, user_id) {
       this.token = token;
       this.user_id = user_id;
-      // console.log(this.token);
-      // console.log(this.user_id)
     }
   }
 }
