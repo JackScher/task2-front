@@ -14,13 +14,14 @@ import axios from "axios";
 
 export default {
   name: "AnswerComment",
-  props: ['answer'],
+  props: ['answer', 'question'],
   mounted() {
-    console.log(this.answer)
+    this.id = this.question.id
   },
   data() {
     return{
-      text: null
+      text: null,
+      id: null
     }
   },
   methods: {
@@ -28,7 +29,6 @@ export default {
       let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
       let value = 'Token '+localStorage.getItem('user-token')
       headers['Authorization'] = value
-
 
       axios.post('http://127.0.0.1:8000/questions/api/comment/create/', {
         text: this.text,
@@ -40,7 +40,7 @@ export default {
       .catch(err => console.log(err))
     },
     back() {
-      this.$emit('BackToQuestion', null)
+      this.$emit('BackToQuestion', this.id)
     }
   }
 }

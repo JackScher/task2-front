@@ -26,14 +26,14 @@
         <div v-for="comment in answer.comments">
           {{comment.text}}
         </div>
-        <button @click="create_answer_comment(answer)">comment</button>
+        <button @click="create_answer_comment(answer, question_item)">comment</button>
         <hr>
       </div>
     </div>
 
     <CreateAnswer v-if="answer" :answer="answer" @ReturnToQuestion="return_to_question"/>
     <QuestionComment v-if="question_comment" :question="question_comment" @BackToQuestion="from_qcomment_to_question"/>
-    <AnswerComment v-if="answer_comment" :answer="answer_comment"  @BackToQuestion="from_acomment_to_question"/>
+    <AnswerComment v-if="answer_comment" :answer="answer_comment" :question="question_item" @BackToQuestion="from_acomment_to_question"/>
     <ForeignProfile v-if="foreign_user_profile" :user="foreign_user_profile" @BackToQuestion="from_foreign_profile_to_question"/>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
   },
   mounted() {
     this.get_current_question();
-    // console.log('ID:'+this.question_id)
+    console.log('ID:'+this.question_id)
   },
   methods: {
     get_current_question() {
@@ -94,12 +94,20 @@ export default {
       this.question_comment = item
     },
     from_acomment_to_question(item) {
-      // this.get_current_question()
-      // console.log(this.question_id)
-      this.answer_comment = item
+      axios.get(`http://127.0.0.1:8000/questions/api/question/item/?id=${item}`, {})
+      .then(res => {
+        this.question_item = res.data[0]
+      })
+      .catch(err => console.log(err))
+
+      this.answer_comment = null
     },
-    create_answer_comment(item) {
+
+
+    create_answer_comment(item, question) {
      this.answer_comment = item
+     this.question_item = question
+
     },
     get_user_profile_id(item) {
       this.foreign_user_profile = item
