@@ -6,7 +6,7 @@
       title: <input type="text" name="title" v-model="title"><br>
       question: <input type="text" name="body" v-model="body"><br>
       <button type="submit">ask</button>
-      <button >back</button>
+      <button @click="back">back</button>
     </form>
     <hr>
   </div>
@@ -45,6 +45,9 @@ export default {
           .then(res => console.log(res))
           .catch(err => console.log(err))
     },
+    back() {
+      this.$emit('ListOfQuestions', null)
+    }
   }
 }
 </script>

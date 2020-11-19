@@ -14,7 +14,6 @@
         <div v-for="comment in question.comments">
           {{comment.text}}
         </div>
-      <button>Comment</button>
       <hr>
     </div>
   </div>
