@@ -31,13 +31,15 @@ export default {
       }).then(res => {
             this.token = res.data.key
             this.user_id = res.data.user.id
-            // localStorage.setItem('user-token', this.token)
-            // localStorage.setItem('user-id', this.user_id)
+            localStorage.setItem('user-token', this.token)
+            localStorage.setItem('user-id', this.user_id)
             this.$emit('TokenWasSet', this.token, this.user_id)
           }
       ).catch( err => {
             localStorage.removeItem('user-token')
+            localStorage.removeItem('user-id')
             this.token = null
+            this.id = null
             console.log('Error: ', err);
             console.log('not registered user');
           }

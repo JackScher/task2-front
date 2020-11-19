@@ -4,8 +4,8 @@
     <Login @TokenWasSet="SetToken"/>
     <br>
     <hr>
-    <h3>Registration: </h3>
-    <Register/>
+<!--    <h3>Registration: </h3>-->
+<!--    <Register/>-->
     <br>
 <!--    <Conf/>-->
     <br>
@@ -14,11 +14,11 @@
 <!--    <Linkedin/>-->
     <hr>
     <br>
+    <router-link to="/profile">Profile</router-link>
     <br>
     <br>
     <Chat :token="token" :u_id="user_id"/>
 
-<!--      <Chat/>-->
   </div>
 </template>
 
@@ -29,8 +29,8 @@ import Register from '@/components/Register.vue'
 import Conf from '@/components/Conf.vue'
 import Google from '@/components/Google.vue'
 import Linkedin from '@/components/Linkedin.vue'
-// import Chat from '@/components/Chat.vue'
 import Chat from '@/components/Chat/Chat-v-2.vue'
+
 
 export default {
   name: 'Home',
@@ -40,7 +40,7 @@ export default {
     Conf,
     Google,
     Linkedin,
-    Chat
+    Chat,
   },
   data() {
     return{

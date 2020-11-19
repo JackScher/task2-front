@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Confirm from '../views/Confirm.vue'
 import LogedIn from "@/views/LogedIn";
+import ProfileView from "@/views/ProfileView";
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/logedin',
     name: 'LogedIn',
     component: LogedIn
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView
   },
 ]
 

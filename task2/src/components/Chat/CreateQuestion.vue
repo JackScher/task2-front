@@ -6,6 +6,7 @@
       title: <input type="text" name="title" v-model="title"><br>
       question: <input type="text" name="body" v-model="body"><br>
       <button type="submit">ask</button>
+      <button >back</button>
     </form>
     <hr>
   </div>
@@ -13,9 +14,14 @@
 
 <script>
 import axios from "axios";
+import CreateQuestion from "@/components/Chat/CreateQuestion";
+
 
 export default {
   name: "CreateQuestion",
+  components: {
+    CreateQuestion
+  },
   data() {
     return{
       user_id: null,
