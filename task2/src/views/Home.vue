@@ -4,10 +4,10 @@
     <Login @TokenWasSet="SetToken"/>
     <br>
     <hr>
-<!--    <h3>Registration: </h3>-->
-<!--    <Register/>-->
+    <h3>Registration: </h3>
+    <Register/>
     <br>
-<!--    <Conf/>-->
+    <Conf/>
     <br>
 <!--    <Google/>-->
 <!--    <br>-->

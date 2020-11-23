@@ -37,8 +37,7 @@ export default {
       headers['Authorization'] = value
       console.log(headers)
 
-      axios.post(`http://127.0.0.1:8000/rest-auth/api/user/create/?id=${this.user.id}`, {
-        // id: this.user.id,
+      axios.put(`http://127.0.0.1:8000/rest-auth/api/user/create/?id=${this.user.id}`, {
         username: this.username,
         password: this.password,
         about_yourself: this.info,

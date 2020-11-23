@@ -33,7 +33,7 @@ export default {
       axios.post('http://127.0.0.1:8000/questions/api/comment/create/', {
         text: this.text,
         user_id: localStorage.getItem('user-id'),
-        content_type: 20,
+        content_type: 19,
         object_id: this.answer.id
       }, {headers})
       .then(res => console.log(res))
