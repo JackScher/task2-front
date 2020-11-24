@@ -2,13 +2,13 @@
   <div>
     <div>
       <router-link to="/">Back</router-link>
-      <div>
+      <div v-if="!user">
         <br>
         Name: {{profile[0].username}}<br>
         Email: {{profile[0].email}}<br>
         Info: {{profile[0].about_yourself}}<br>
-        Status: {{profile[0].STATUS_CHOICES}}<br>
-        Rank: {{profile[0].RANK_CHOICES}}<br>
+        Status: {{profile[0].status}}<br>
+        Rank: {{profile[0].rank}}<br>
         Working/learning at: {{profile[0].place_of_employment}}<br>
         Location: {{profile[0].location}}<br>
         Avatar: {{profile[0].avatar}}<br>
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <ChangeProfile v-if="user" :user="user"/>
+    <ChangeProfile v-if="user" :user="user" @Changed="changed"/>
 
   </div>
 </template>
@@ -57,7 +57,10 @@ export default {
   methods: {
     get_self_profile() {
       axios.get(`http://127.0.0.1:8000/rest-auth/api/users/?id=${this.id}`, {})
-      .then(res => this.profile = res.data)
+      .then(res => {
+        this.profile = res.data
+        console.log(res.data[0])
+      })
       .catch(err => console.log(err))
     },
     set_data() {
@@ -67,6 +70,10 @@ export default {
       console.log(this.token)
     },
     set_user(item) {
+      this.user = item
+    },
+    changed(item) {
+      this.get_self_profile()
       this.user = item
     }
   }

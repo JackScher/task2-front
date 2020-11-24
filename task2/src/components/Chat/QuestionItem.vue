@@ -144,7 +144,8 @@ export default {
       console.log(headers)
 
       axios.post(`http://127.0.0.1:8000/questions/api/vote/`, {
-        user_id: localStorage.getItem('user-id'),
+        user_id: question.user_id.id,
+        voter: localStorage.getItem('user-id'),
         mode: mode,
         content_type: 15,
         object_id: question.id

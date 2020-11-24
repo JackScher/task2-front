@@ -7,6 +7,11 @@
       Info: <input type="text" name="info" v-model="info"><br>
       Working/learning at: <input type="text" name="employment" v-model="employment"><br>
       Location: <input type="text" name="location" v-model="location"><br>
+      Status:  <select name="status" v-model="status">
+                  <option>none</option>
+                  <option>educating</option>
+                  <option>working</option>
+                </select>
       <button type="submit">click</button>
     </form>
   </div>
@@ -25,6 +30,7 @@ export default {
       info: null,
       employment: null,
       location: null,
+      status: null
     }
   },
   mounted() {
@@ -37,16 +43,19 @@ export default {
       headers['Authorization'] = value
       console.log(headers)
 
-      axios.put(`http://127.0.0.1:8000/rest-auth/api/user/create/?id=${this.user.id}`, {
+      axios.put(`http://127.0.0.1:8000/rest-auth/api/user/update/?id=${this.user.id}`, {
+        id: this.user.id,
         username: this.username,
         password: this.password,
         about_yourself: this.info,
         place_of_employment: this.employment,
-        location: this.location
+        location: this.location,
+        status: this.status
       }, {headers})
-      .then(res => console.log(res))
+      .then(res => this.$emit('Changed', null))
       .catch(err => console.log(err))
-    }
+
+    },
   }
 }
 </script>

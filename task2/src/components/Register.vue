@@ -49,7 +49,7 @@ export default {
           about_yourself: this.info,
           place_of_employment: this.place_of_employment,
           location: this.location,
-          STATUS_CHOICES: this.status
+          status: this.status
         })
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
