@@ -42,7 +42,7 @@ export default {
         body: this.body,
         user_id: this.u_id
       }, {headers})
-          .then(res => console.log(res))
+          .then(res => this.$emit('ListOfQuestions', null))
           .catch(err => console.log(err))
     },
     back() {

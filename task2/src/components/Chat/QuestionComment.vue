@@ -34,7 +34,7 @@ export default {
         content_type: 15,
         object_id: this.question.id
       }, {headers})
-      .then(res => console.log(res))
+      .then(res => this.$emit('BackToQuestion', null))
       .catch(err => console.log(err))
     },
     back() {

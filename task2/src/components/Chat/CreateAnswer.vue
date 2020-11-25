@@ -38,7 +38,7 @@ export default {
         question_id: this.answer.id,
         user_id: localStorage.getItem('user-id')
       }, {headers})
-      .then(res => console.log(res))
+      .then(res => this.$emit('ReturnToQuestion', null))
       .catch(err => console.log(err))
     },
     back() {
