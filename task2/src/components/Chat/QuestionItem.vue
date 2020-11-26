@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!answer&&!question_comment&&!answer_comment&&!foreign_user_profile" class="body">
+    <div v-if="!answer&&!question_comment&&!answer_comment&&!foreign_user_profile&&!tag" class="body">
       <h3><strong>Question:</strong> </h3>
       <a @click="get_user_profile_id(question_item.user_id)"><strong>Asked by:</strong> {{question_item.user_id.username}}</a><br>
       <strong>Title:</strong> {{question_item.title}}<br>
@@ -8,15 +8,11 @@
       <strong>Tags:</strong>
         <div v-for="tag in question_item.tags">
           {{tag.name}}
+          <button @click="remove_tag(tag, question_item)">Remove</button>
         </div>
 
-<!--      <button @click="estimate_current_question(question_item, 'plus')">Like</button>-->
-<!--      <button @click="estimate_current_question(question_item, 'minus')">DislikeLike</button>-->
-
-      <button @click="estimate_current_question(question_item, 'plus')">Like</button>
-      <button @click="estimate_current_question(question_item, 'minus')">DislikeLike</button>
-
-
+      <button @click="estimate_current_question(question_item, 'up')">Like</button>
+      <button @click="estimate_current_question(question_item, 'down')">DislikeLike</button>
 
       <p><strong>Comments:</strong></p>
         <div v-for="comment in question_item.comments">
@@ -25,6 +21,7 @@
       <button @click="back">back</button>
       <button @click="create_answer(question_item)">Answer</button>
       <button @click="create_question_comment(question_item)">Comment</button>
+      <button @click="tag_list(question_item)">Add tag</button>
       <hr>
       <h3>Answers: </h3>
       <div v-for="answer in question_item.answers" @click="get_current_answer(answer.id)">
@@ -32,8 +29,8 @@
         <strong>Title:</strong> {{answer.title}}<br>
         <strong>Body:</strong> {{answer.body}}<br>
 
-        <button @click="estimate_current_answer(answer, 'plus')">Like</button>
-        <button @click="estimate_current_answer(answer, 'minus')">DislikeLike</button>
+        <button @click="estimate_current_answer(answer, 'up')">Like</button>
+        <button @click="estimate_current_answer(answer, 'down')">DislikeLike</button>
 
         <strong>Comments:</strong>
         <div v-for="comment in answer.comments">
@@ -48,6 +45,7 @@
     <QuestionComment v-if="question_comment" :question="question_comment" @BackToQuestion="from_qcomment_to_question"/>
     <AnswerComment v-if="answer_comment" :answer="answer_comment" :question="question_item" @BackToQuestion="from_acomment_to_question"/>
     <ForeignProfile v-if="foreign_user_profile" :user="foreign_user_profile" @BackToQuestion="from_foreign_profile_to_question"/>
+    <TagList v-if="tag" :question="question_item" @BackToQuestion="from_tag_to_question"/>
   </div>
 </template>
 
@@ -57,11 +55,12 @@ import CreateAnswer from "@/components/Chat/CreateAnswer";
 import QuestionComment from "@/components/Chat/QuestionComment";
 import AnswerComment from "@/components/Chat/AnswerComment";
 import ForeignProfile from "@/components/Profiles/ForeignProfile";
+import TagList from "@/components/Chat/TagList"
 
 export default {
   name: "QuestionItem",
   components: {
-    CreateAnswer, QuestionComment, AnswerComment, ForeignProfile
+    CreateAnswer, QuestionComment, AnswerComment, ForeignProfile, TagList
   },
   props: ['question_id'],
   data() {
@@ -70,7 +69,8 @@ export default {
       answer: null,
       question_comment: null,
       answer_comment: null,
-      foreign_user_profile: null
+      foreign_user_profile: null,
+      tag: null
     }
   },
   mounted() {
@@ -126,21 +126,6 @@ export default {
       this.foreign_user_profile = item
     },
 
-
-    // estimate_current_question(question, mode) {
-    //   let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
-    //   let value = 'Token '+localStorage.getItem('user-token')
-    //   headers['Authorization'] = value
-    //   console.log(headers)
-    //
-    //   axios.put(`http://127.0.0.1:8000/rest-auth/api/user/update/?id=${question.user_id.id}`, {
-    //     id: question.user_id.id,
-    //     event: mode
-    //   }, {headers})
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err))
-    // },
-
     estimate_current_question(question, mode) {
       let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
       let value = 'Token '+localStorage.getItem('user-token')
@@ -148,9 +133,9 @@ export default {
       console.log(headers)
 
       axios.post(`http://127.0.0.1:8000/questions/api/vote/`, {
-        user_id: question.user_id.id,
+        // user_id: question.user_id.id,
         voter: localStorage.getItem('user-id'),
-        mode: mode,
+        action: mode,
         content_type: 15,
         object_id: question.id,
         detail: 'question'
@@ -168,7 +153,7 @@ export default {
       axios.post(`http://127.0.0.1:8000/questions/api/vote/`, {
         user_id: answer.user_id.id,
         voter: localStorage.getItem('user-id'),
-        mode: mode,
+        action: mode,
         content_type: 20,
         object_id: answer.id,
         detail: 'answer'
@@ -176,6 +161,29 @@ export default {
           .then(res => console.log(res))
           .catch(err => console.log(err))
     },
+    tag_list(question_item) {
+      this.tag = question_item
+    },
+
+    from_tag_to_question(item) {
+      this.get_current_question()
+      this.tag = item
+    },
+    remove_tag(tag, question) {
+      // console.log(tag.id)
+      let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
+      let value = 'Token '+localStorage.getItem('user-token')
+      headers['Authorization'] = value
+      console.log(headers)
+
+      axios.put(`http://127.0.0.1:8000/questions/api/tag/remove/?id=${tag.id}`, {
+        id: tag.id,
+        question_id: question.id
+      }, {headers})
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+      this.question_item()
+    }
   }
 }
 </script>
