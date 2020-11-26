@@ -31,6 +31,10 @@
         <a @click="get_user_profile_id(question_item.user_id)"><strong>Answered by:</strong> {{answer.user_id.username}}</a><br>
         <strong>Title:</strong> {{answer.title}}<br>
         <strong>Body:</strong> {{answer.body}}<br>
+
+        <button @click="estimate_current_answer(answer, 'plus')">Like</button>
+        <button @click="estimate_current_answer(answer, 'minus')">DislikeLike</button>
+
         <strong>Comments:</strong>
         <div v-for="comment in answer.comments">
           {{comment.text}}
@@ -148,7 +152,26 @@ export default {
         voter: localStorage.getItem('user-id'),
         mode: mode,
         content_type: 15,
-        object_id: question.id
+        object_id: question.id,
+        detail: 'question'
+      }, {headers})
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+    },
+
+    estimate_current_answer(answer, mode) {
+      let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
+      let value = 'Token '+localStorage.getItem('user-token')
+      headers['Authorization'] = value
+      console.log(headers)
+
+      axios.post(`http://127.0.0.1:8000/questions/api/vote/`, {
+        user_id: answer.user_id.id,
+        voter: localStorage.getItem('user-id'),
+        mode: mode,
+        content_type: 20,
+        object_id: answer.id,
+        detail: 'answer'
       }, {headers})
           .then(res => console.log(res))
           .catch(err => console.log(err))

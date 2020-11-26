@@ -33,14 +33,16 @@ export default {
   methods: {
     create_new_question() {
       let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
-      let value = 'Token '+this.token
+      // let value = 'Token '+this.token
+      let value = 'Token '+ localStorage.getItem('user-token')
       headers['Authorization'] = value
       console.log(headers)
 
       axios.post('http://127.0.0.1:8000/questions/api/question/create/', {
         title: this.title,
         body: this.body,
-        user_id: this.u_id
+        // user_id: this.u_id
+        user_id: localStorage.getItem('user-id')
       }, {headers})
           .then(res => this.$emit('ListOfQuestions', null))
           .catch(err => console.log(err))
