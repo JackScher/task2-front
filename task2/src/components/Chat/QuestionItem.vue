@@ -17,6 +17,8 @@
       <p><strong>Comments:</strong></p>
         <div v-for="comment in question_item.comments">
           {{comment.text}}
+          <button @click="estimate_current_comment(comment, 'up')">LikeComment</button>
+          <button @click="estimate_current_comment(comment, 'down')">DislikeLikeComment</button>
         </div>
       <button @click="back">back</button>
       <button @click="create_answer(question_item)">Answer</button>
@@ -35,6 +37,8 @@
         <strong>Comments:</strong>
         <div v-for="comment in answer.comments">
           {{comment.text}}
+          <button @click="estimate_current_comment(comment, 'up')">LikeComment</button>
+          <button @click="estimate_current_comment(comment, 'down')">DislikeLikeComment</button>
         </div>
         <button @click="create_answer_comment(answer, question_item)">comment</button>
         <hr>
@@ -151,12 +155,30 @@ export default {
       console.log(headers)
 
       axios.post(`http://127.0.0.1:8000/questions/api/vote/`, {
-        user_id: answer.user_id.id,
+        // user_id: answer.user_id.id,
         voter: localStorage.getItem('user-id'),
         action: mode,
         content_type: 20,
         object_id: answer.id,
         detail: 'answer'
+      }, {headers})
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+    },
+    estimate_current_comment(comment, mode) {
+      console.log(comment)
+      let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
+      let value = 'Token '+localStorage.getItem('user-token')
+      headers['Authorization'] = value
+      console.log(headers)
+
+      axios.post(`http://127.0.0.1:8000/questions/api/vote/`, {
+        // user_id: comment.user_id.id,
+        voter: localStorage.getItem('user-id'),
+        action: mode,
+        content_type: 19,
+        object_id: comment.id,
+        detail: 'comment'
       }, {headers})
           .then(res => console.log(res))
           .catch(err => console.log(err))
@@ -180,9 +202,8 @@ export default {
         id: tag.id,
         question_id: question.id
       }, {headers})
-          .then(res => console.log(res))
+          .then(res => this.get_current_question())
           .catch(err => console.log(err))
-      this.question_item()
     }
   }
 }

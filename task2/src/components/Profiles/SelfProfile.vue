@@ -59,15 +59,15 @@ export default {
       axios.get(`http://127.0.0.1:8000/rest-auth/api/users/?id=${this.id}`, {})
       .then(res => {
         this.profile = res.data
-        console.log(res.data[0])
+        // console.log(res.data[0])
       })
       .catch(err => console.log(err))
     },
     set_data() {
       this.id = localStorage.getItem('user-id')
       this.token = localStorage.getItem('user-token')
-      console.log(this.id)
-      console.log(this.token)
+      // console.log(this.id)
+      // console.log(this.token)
     },
     set_user(item) {
       this.user = item

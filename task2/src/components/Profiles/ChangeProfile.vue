@@ -34,7 +34,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.user)
+    // console.log(this.user)
   },
   methods: {
     change_user() {
@@ -54,7 +54,6 @@ export default {
       }, {headers})
       .then(res => this.$emit('Changed', null))
       .catch(err => console.log(err))
-
     },
   }
 }
