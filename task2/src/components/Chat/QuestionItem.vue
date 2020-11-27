@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!answer&&!question_comment&&!answer_comment&&!foreign_user_profile&&!tag" class="body">
+    <div v-if="!answer&&!question_comment&&!answer_comment&&!foreign_user_profile&&!tag&&!comment_comment" class="body">
       <h3><strong>Question:</strong> </h3>
       <a @click="get_user_profile_id(question_item.user_id)"><strong>Asked by:</strong> {{question_item.user_id.username}}</a><br>
       <strong>Title:</strong> {{question_item.title}}<br>
@@ -19,6 +19,7 @@
           {{comment.text}}
           <button @click="estimate_current_comment(comment, 'up')">LikeComment</button>
           <button @click="estimate_current_comment(comment, 'down')">DislikeLikeComment</button>
+          <button @click="create_comment_comment(comment)">Comment</button>
         </div>
       <button @click="back">back</button>
       <button @click="create_answer(question_item)">Answer</button>
@@ -39,6 +40,7 @@
           {{comment.text}}
           <button @click="estimate_current_comment(comment, 'up')">LikeComment</button>
           <button @click="estimate_current_comment(comment, 'down')">DislikeLikeComment</button>
+          <button @click="create_comment_comment(comment)">Comment</button>
         </div>
         <button @click="create_answer_comment(answer, question_item)">comment</button>
         <hr>
@@ -50,6 +52,7 @@
     <AnswerComment v-if="answer_comment" :answer="answer_comment" :question="question_item" @BackToQuestion="from_acomment_to_question"/>
     <ForeignProfile v-if="foreign_user_profile" :user="foreign_user_profile" @BackToQuestion="from_foreign_profile_to_question"/>
     <TagList v-if="tag" :question="question_item" @BackToQuestion="from_tag_to_question"/>
+    <CreateCommentComment v-if="comment_comment" :comment="comment_comment" @BackToQuestion="from_comment_to_question"/>
   </div>
 </template>
 
@@ -60,11 +63,12 @@ import QuestionComment from "@/components/Chat/QuestionComment";
 import AnswerComment from "@/components/Chat/AnswerComment";
 import ForeignProfile from "@/components/Profiles/ForeignProfile";
 import TagList from "@/components/Chat/TagList"
+import CreateCommentComment from "@/components/Chat/CreateCommentComment";
 
 export default {
   name: "QuestionItem",
   components: {
-    CreateAnswer, QuestionComment, AnswerComment, ForeignProfile, TagList
+    CreateAnswer, QuestionComment, AnswerComment, ForeignProfile, TagList, CreateCommentComment
   },
   props: ['question_id'],
   data() {
@@ -73,6 +77,7 @@ export default {
       answer: null,
       question_comment: null,
       answer_comment: null,
+      comment_comment: null,
       foreign_user_profile: null,
       tag: null
     }
@@ -204,6 +209,13 @@ export default {
       }, {headers})
           .then(res => this.get_current_question())
           .catch(err => console.log(err))
+    },
+    create_comment_comment(comment) {
+      this.comment_comment = comment
+      // console.log(this.comment_comment)
+    },
+    from_comment_to_question(item) {
+      this.comment_comment = item
     }
   }
 }
