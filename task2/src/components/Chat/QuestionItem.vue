@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div v-if="!answer&&!question_comment&&!answer_comment&&!foreign_user_profile&&!tag&&!comment_comment" class="body">
+    <div v-if="!answer&&!question_comment&&!answer_comment&&!foreign_user_profile&&!tag&&!comment_comment&&!edit_comment&&!edit_answer" class="body">
       <h3><strong>Question:</strong> </h3>
+      <br>
       <a @click="get_user_profile_id(question_item.user_id)"><strong>Asked by:</strong> {{question_item.user_id.username}}</a><br>
       <strong>Title:</strong> {{question_item.title}}<br>
       <strong>Body:</strong> {{question_item.body}}<br>
@@ -17,6 +18,11 @@
       <p><strong>Comments:</strong></p>
         <div v-for="comment in question_item.comments">
           {{comment.text}}
+          <button @click="edit_current_comment(comment)">edit</button>
+<!--          <CommentList :item="comment" :list="all_comments"/>-->
+
+          <!--          {{check_comment_list(comment, question_item.comments)}}-->
+
           <button @click="estimate_current_comment(comment, 'up')">LikeComment</button>
           <button @click="estimate_current_comment(comment, 'down')">DislikeLikeComment</button>
           <button @click="create_comment_comment(comment)">Comment</button>
@@ -34,15 +40,18 @@
 
         <button @click="estimate_current_answer(answer, 'up')">Like</button>
         <button @click="estimate_current_answer(answer, 'down')">DislikeLike</button>
-
+        <br>
         <strong>Comments:</strong>
         <div v-for="comment in answer.comments">
           {{comment.text}}
+
           <button @click="estimate_current_comment(comment, 'up')">LikeComment</button>
           <button @click="estimate_current_comment(comment, 'down')">DislikeLikeComment</button>
           <button @click="create_comment_comment(comment)">Comment</button>
         </div>
         <button @click="create_answer_comment(answer, question_item)">comment</button>
+        <br>
+        <button v-if="group" @click="edit_current_answer(answer)">edit answer</button>
         <hr>
       </div>
     </div>
@@ -53,6 +62,8 @@
     <ForeignProfile v-if="foreign_user_profile" :user="foreign_user_profile" @BackToQuestion="from_foreign_profile_to_question"/>
     <TagList v-if="tag" :question="question_item" @BackToQuestion="from_tag_to_question"/>
     <CreateCommentComment v-if="comment_comment" :comment="comment_comment" @BackToQuestion="from_comment_to_question"/>
+    <EditComment v-if="edit_comment" :comment="edit_comment" @BackToQuestion="from_edit_to_question"/>
+    <ModeratorAnswerEdit v-if="edit_answer" :answer="edit_answer" @BackToQuestion="from_edit_answer_to_question"/>
   </div>
 </template>
 
@@ -64,11 +75,14 @@ import AnswerComment from "@/components/Chat/AnswerComment";
 import ForeignProfile from "@/components/Profiles/ForeignProfile";
 import TagList from "@/components/Chat/TagList"
 import CreateCommentComment from "@/components/Chat/CreateCommentComment";
+import CommentList from "@/components/Chat/CommentList";
+import EditComment from "@/components/Chat/EditComment";
+import ModeratorAnswerEdit from "@/components/Chat/ModeratorAnswerEdit";
 
 export default {
   name: "QuestionItem",
   components: {
-    CreateAnswer, QuestionComment, AnswerComment, ForeignProfile, TagList, CreateCommentComment
+    CreateAnswer, QuestionComment, AnswerComment, ForeignProfile, TagList, CreateCommentComment, CommentList, EditComment, ModeratorAnswerEdit
   },
   props: ['question_id'],
   data() {
@@ -79,12 +93,19 @@ export default {
       answer_comment: null,
       comment_comment: null,
       foreign_user_profile: null,
-      tag: null
+      tag: null,
+      edit_comment: null,
+      edit_answer: null,
+      group: null
     }
   },
   mounted() {
     this.get_current_question();
-    // console.log('ID:'+this.question_id)
+    this.group = localStorage.getItem('user-group')
+    if (this.group !== 'moderator') {
+      this.group = null;
+    }
+    this.get_current_question();
   },
   methods: {
     get_current_question() {
@@ -216,7 +237,40 @@ export default {
     },
     from_comment_to_question(item) {
       this.comment_comment = item
+      this.get_current_question()
+    },
+    edit_current_comment(item) {
+      this.edit_comment = item
+    },
+    from_edit_to_question(item) {
+      this.edit_comment = item
+      this.get_current_question()
+    },
+    edit_current_answer(item) {
+      this.edit_answer = item
+    },
+    from_edit_answer_to_question(item) {
+      this.edit_answer = item
+      this.get_current_question()
     }
+    // get_all_comments(item) {
+    //   axios.get('http://127.0.0.1:8000/questions/api/comment/create/')
+    //   .then(res => this.all_comments = res.data)
+    //   .catch(err => console.log(err))
+    //   // this.check_comment_list(item, all_comments)
+    // },
+    //
+    // check_comment_list(obj, arr) {
+    //   let result = [];
+    //   for (let step = 0; step < arr.length; step++) {
+    //     for (let step_inside = 0; step_inside < arr.length; step_inside++) {
+    //       if (obj.id === arr[step_inside].object_id) {
+    //         result = step_inside;
+    //       }
+    //     }
+    //   }
+    //   console.log(result)
+    // }
   }
 }
 </script>

@@ -20,7 +20,8 @@ export default {
       email: '',
       password: '',
       token: null,
-      user_id: null
+      user_id: null,
+      user_group: null
     }
   },
   methods: {
@@ -31,13 +32,16 @@ export default {
       }).then(res => {
             this.token = res.data.key
             this.user_id = res.data.user.id
+            this.user_group = res.data.user.user_group
             localStorage.setItem('user-token', this.token)
             localStorage.setItem('user-id', this.user_id)
-            this.$emit('TokenWasSet', this.token, this.user_id)
+            localStorage.setItem('user-group', this.user_group)
+          this.$emit('TokenWasSet', this.token, this.user_id)
           }
       ).catch( err => {
             localStorage.removeItem('user-token')
             localStorage.removeItem('user-id')
+            localStorage.removeItem('user-group')
             this.token = null
             this.id = null
             console.log('Error: ', err);
