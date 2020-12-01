@@ -44,7 +44,10 @@ export default {
         // user_id: this.u_id
         user_id: localStorage.getItem('user-id')
       }, {headers})
-          .then(res => this.$emit('ListOfQuestions', null))
+          .then(res => {
+              this.$emit('ListOfQuestions', null)
+              console.log(res)
+          })
           .catch(err => console.log(err))
     },
     back() {
