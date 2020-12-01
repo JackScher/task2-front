@@ -109,7 +109,9 @@ export default {
   },
   methods: {
     get_current_question() {
-      // console.log(this.question_id)
+      console.log('In curr q')
+      console.log(this.question_id)
+
       axios.get(`http://127.0.0.1:8000/questions/api/question/item/?id=${this.question_id}`, {})
       .then(res => {
         this.question_item = res.data[0]

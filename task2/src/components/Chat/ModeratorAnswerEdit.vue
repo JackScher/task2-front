@@ -38,10 +38,10 @@ export default {
         current_user_id: localStorage.getItem('user-id'),
         group: localStorage.getItem('user-group')
       }, {headers})
-      .then(res => {
-        console.log(res)
-        this.back()
-      })
+        .then(res => {
+          console.log(res)
+          this.back()
+        })
           .catch(err => console.log(err))
     }
   }

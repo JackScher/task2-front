@@ -8,6 +8,7 @@
     <Register/>
     <br>
     <Conf/>
+    <ModeratorConf/>
     <br>
 <!--    <Google/>-->
 <!--    <br>-->
@@ -30,6 +31,7 @@ import Conf from '@/components/Conf.vue'
 import Google from '@/components/Google.vue'
 import Linkedin from '@/components/Linkedin.vue'
 import Chat from '@/components/Chat/Chat-v-2.vue'
+import ModeratorConf from "@/components/ModeratorConf";
 
 
 export default {
@@ -41,6 +43,7 @@ export default {
     Google,
     Linkedin,
     Chat,
+    ModeratorConf
   },
   data() {
     return{
