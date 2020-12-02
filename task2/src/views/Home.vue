@@ -4,11 +4,13 @@
     <Login @TokenWasSet="SetToken"/>
     <br>
     <hr>
+    <!-- <router-link v-if="moderator" to="/moder">Moderator</router-link> -->
+    <!-- <ModeratorPage v-if="moderator"/> -->
     <h3>Registration: </h3>
     <Register/>
     <br>
-<!--    <Conf/>-->
-<!--    <ModeratorConf/>-->
+    <!-- <Conf/> -->
+    <ModeratorConf/>
     <br>
 <!--    <Google/>-->
 <!--    <br>-->
@@ -32,6 +34,7 @@ import Google from '@/components/Google.vue'
 import Linkedin from '@/components/Linkedin.vue'
 import Chat from '@/components/Chat/Chat-v-2.vue'
 import ModeratorConf from "@/components/ModeratorConf";
+// import ModeratorPage from '@/views/ModeratorPage';
 
 
 export default {
@@ -48,14 +51,14 @@ export default {
   data() {
     return{
       token: null,
-      user_id: null
+      user_id: null,
     }
   },
   methods: {
     SetToken(token, user_id) {
       this.token = token;
       this.user_id = user_id;
-    }
+    },
   }
 }
 </script>

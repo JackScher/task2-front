@@ -148,8 +148,8 @@ export default {
       this.answer_comment = null
     },
     create_answer_comment(item, question) {
-     this.answer_comment = item
-     this.question_item = question
+      this.answer_comment = item
+      this.question_item = question
     },
     get_user_profile_id(item) {
       this.foreign_user_profile = item

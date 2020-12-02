@@ -1,8 +1,9 @@
 <template>
   <div>
+    <button v-if="moderator" @click="moderator_page_on">Moderator Page</button>
     <div>
       <router-link to="/">Back</router-link>
-      <div v-if="!user&&!question&&!answer">
+      <div v-if="!user&&!question&&!answer&&!on">
         <br>
         Name: {{profile[0].username}}<br>
         Email: {{profile[0].email}}<br>
@@ -29,6 +30,9 @@
         </div>
       </div>
     </div>
+
+    <ModeratorPage v-if="on" @BackToProfile='back_to_profile' />
+
     <ChangeProfile v-if="user" :user="user" @Changed="changed"/>
     <EditQuestion v-if="question" :question="question" @BackToQuestion="from_question_to_profile"/>
     <EditAnswer v-if="answer" :answer="answer" @BackToQuestion="from_answer_to_profile"/>
@@ -41,12 +45,13 @@ import axios from 'axios';
 import ChangeProfile from "@/components/Profiles/ChangeProfile";
 import EditQuestion from "@/components/Chat/EditQuestion";
 import EditAnswer from "@/components/Chat/EditAnswer";
+import ModeratorPage from '@/components/ModeratorPage';
 
 
 export default {
   name: "SelfProfile",
   components: {
-    ChangeProfile, EditQuestion, EditAnswer
+    ChangeProfile, EditQuestion, EditAnswer, ModeratorPage
   },
   data() {
     return{
@@ -55,12 +60,15 @@ export default {
       token: null,
       user: null,
       question: null,
-      answer: null
+      answer: null,
+      moderator: null,
+      on: null
     }
   },
   mounted() {
     this.set_data();
     this.get_self_profile();
+    this.is_moderator();
   },
   methods: {
     get_self_profile() {
@@ -93,6 +101,19 @@ export default {
     },
     from_answer_to_profile(item) {
       this.answer = item
+      this.get_self_profile()
+    }, 
+    is_moderator() {
+      this.moderator = localStorage.getItem('user-group');
+      if (this.moderator !== 'moderator') {
+        this.moderator = null;
+      }
+    },
+    moderator_page_on() {
+      this.on = true
+    },
+    back_to_profile(item) {
+      this.on = item
       this.get_self_profile()
     }
   }
