@@ -38,7 +38,8 @@ export default {
         text: this.text,
         user_id: localStorage.getItem('user-id'),
         content_type: 19,
-        object_id: this.comment.id
+        object_id: this.comment.id,
+        parent: this.comment.id
       }, {headers})
       .then(res => this.back())
       .catch(err => console.log(err))
