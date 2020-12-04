@@ -19,7 +19,7 @@ export default {
   },
   props: ['comment'],
   mounted() {
-    console.log(this.comment)
+    // console.log(this.comment)
   },
   methods: {
     back() {
@@ -37,7 +37,7 @@ export default {
       axios.post('http://127.0.0.1:8000/questions/api/comment/create/', {
         text: this.text,
         user_id: localStorage.getItem('user-id'),
-        content_type: 19,
+        content_type: 20,
         object_id: this.comment.id,
         parent: this.comment.id
       }, {headers})

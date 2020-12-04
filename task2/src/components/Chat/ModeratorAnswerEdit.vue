@@ -13,17 +13,21 @@ import axios from "axios";
 
 export default {
   name: "ModeratorAnswerEdit",
-  props: ['answer'],
+  props: ['answer', 'question'],
   data() {
     return{
       title: null,
-      body: null
+      body: null,
+      id: null
     }
   },
-  mounted() {},
+  mounted() {
+    this.id = this.question.id
+    console.log(this.id)
+  },
   methods: {
     back() {
-      this.$emit('BackToQuestion', null)
+      this.$emit('BackToQuestion', this.id)
     },
     edit_answer() {
       let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
