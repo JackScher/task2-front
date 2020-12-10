@@ -279,7 +279,7 @@ export default {
         // user_id: comment.user_id.id,
         voter: localStorage.getItem('user-id'),
         action: mode,
-        content_type: 19,
+        content_type: 20,
         object_id: comment.id,
         detail: 'comment'
       }, {headers})

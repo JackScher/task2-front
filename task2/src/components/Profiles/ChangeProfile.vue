@@ -13,6 +13,7 @@
                   <option>working</option>
                 </select>
       <button type="submit">click</button>
+      <button @click="back">back</button>
     </form>
   </div>
 </template>
@@ -47,14 +48,20 @@ export default {
         id: this.user.id,
         username: this.username,
         password: this.password,
-        about_yourself: this.info,
         place_of_employment: this.employment,
+        about_yourself: this.info,
         location: this.location,
         status: this.status
       }, {headers})
-      .then(res => this.$emit('Changed', null))
+      .then(res => {
+        this.$emit('Changed', null);
+        console.log(res);
+      })
       .catch(err => console.log(err))
     },
+    back() {
+      this.$emit('Changed', null);
+    }
   }
 }
 </script>

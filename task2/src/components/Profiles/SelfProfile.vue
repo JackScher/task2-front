@@ -3,17 +3,17 @@
     <button v-if="moderator" @click="moderator_page_on">Moderator Page</button>
     <div>
       <router-link to="/">Back</router-link>
-      <div v-if="!user&&!question&&!answer&&!on">
+      <div v-if="!user&&!question&&!answer&&!on&&!skill">
         <br>
         Name: {{profile[0].username}}<br>
         Email: {{profile[0].email}}<br>
         Info: {{profile[0].about_yourself}}<br>
         Status: {{profile[0].status}}<br>
-        Rank: {{profile[0].rank}}<br>
         Working/learning at: {{profile[0].place_of_employment}}<br>
         Location: {{profile[0].location}}<br>
         Avatar: {{profile[0].avatar}}<br>
         <button @click="set_user(profile[0])">Change</button>
+        <button @click="add_skill">add skill</button>
         <hr>
         <p>Answers: </p>
         <div v-for="answer in profile[0].answers">
@@ -32,7 +32,7 @@
     </div>
 
     <ModeratorPage v-if="on" @BackToProfile='back_to_profile' />
-
+    <Skills v-if="skill" @BackToProfile="from_skill_to_profile"/>
     <ChangeProfile v-if="user" :user="user" @Changed="changed"/>
     <EditQuestion v-if="question" :question="question" @BackToQuestion="from_question_to_profile"/>
     <EditAnswer v-if="answer" :answer="answer" @BackToQuestion="from_answer_to_profile"/>
@@ -46,12 +46,13 @@ import ChangeProfile from "@/components/Profiles/ChangeProfile";
 import EditQuestion from "@/components/Chat/EditQuestion";
 import EditAnswer from "@/components/Chat/EditAnswer";
 import ModeratorPage from '@/components/ModeratorPage';
+import Skills from '@/components/Profiles/Skills';
 
 
 export default {
   name: "SelfProfile",
   components: {
-    ChangeProfile, EditQuestion, EditAnswer, ModeratorPage
+    ChangeProfile, EditQuestion, EditAnswer, ModeratorPage, Skills
   },
   data() {
     return{
@@ -62,7 +63,8 @@ export default {
       question: null,
       answer: null,
       moderator: null,
-      on: null
+      on: null,
+      skill: null
     }
   },
   mounted() {
@@ -115,6 +117,12 @@ export default {
     back_to_profile(item) {
       this.on = item
       this.get_self_profile()
+    },
+    add_skill() {
+      this.skill = true
+    }, 
+    from_skill_to_profile(item) {
+      this.skill = null
     }
   }
 }

@@ -22,7 +22,7 @@ export default {
       let value = 'Token '+ localStorage.getItem('user-token')
       headers['Authorization'] = value
 
-      axios.put(`http://127.0.0.1:8000/questions/api/answer/create/?id=${this.answer.id}`, {
+      axios.put(`http://127.0.0.1:8000/questions/api/answer/edit/?id=${this.answer.id}`, {
         id: this.answer.id,
         title: this.title,
         body: this.body,

@@ -9,8 +9,8 @@
     <h3>Registration: </h3>
     <Register/>
     <br>
-    <Conf/>
-    <!-- <ModeratorConf/> -->
+    <!-- <Conf/> -->
+    <ModeratorConf/>
     <br>
 <!--    <Google/>-->
 <!--    <br>-->

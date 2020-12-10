@@ -31,7 +31,7 @@ export default {
       let value = 'Token '+ localStorage.getItem('user-token')
       headers['Authorization'] = value
 
-      axios.put(`http://127.0.0.1:8000/questions/api/comment/create/?id=${this.comment.id}`, {
+      axios.put(`http://127.0.0.1:8000/questions/api/comment/edit/?id=${this.comment.id}`, {
         id: this.comment.id,
         text: this.text,
         user_id: this.comment.user_id,
