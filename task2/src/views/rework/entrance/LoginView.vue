@@ -29,9 +29,9 @@ export default {
                 password: this.password,
             })
             .then(res => {
-                console.log(res);
-                localStorage.setItem('user-token', this.login)
-                localStorage.setItem('user-id', this.password)
+                console.log(res.data);
+                localStorage.setItem('user-token', res.data.key)
+                localStorage.setItem('user-id', res.data.user.id)
                 this.$router.push({name: 'self-profile-view'})
             })
             .catch( err => {

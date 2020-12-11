@@ -9,7 +9,15 @@ import LoginView from "@/views/rework/entrance/LoginView";
 import RegisterView from "@/views/rework/entrance/RegisterView";
 import ConfirmEmailView from "@/views/rework/entrance/ConfirmEmailView";
 
+import ProfileView from "@/views/rework/profile/ProfileView";
 import SelfProfileView from "@/views/rework/profile/SelfProfileView";
+import EditProfileView from "@/views/rework/profile/EditProfileView";
+import ProfileEditItem from "@/views/rework/profile/ProfileEditItem";
+
+import ModeratorView from "@/views/rework/moderator/ModeratorView";
+import ModeratorProfileView from "@/views/rework/moderator/ModeratorProfileView";
+import ModeratorEditItem from "@/views/rework/moderator/ModeratorEditItem";
+import ConfirmModeratorView from "@/views/rework/moderator/ConfirmModeratorView";
 
 
 Vue.use(VueRouter)
@@ -39,10 +47,67 @@ const routes = [
   },
   {
     path: '/profile',
-    name: 'self-profile-view',
-    component: SelfProfileView,
+    name: 'profile-view',
+    component: ProfileView,
+    children: [
+      {
+        path: '',
+        name: 'self-profile-view',
+        component: SelfProfileView,
+      },
+      {
+        path: 'edit',
+        name: 'edit-profile-view',
+        component: EditProfileView,
+      },
+      {
+        path: 'edit-item',
+        name: 'profile-edit-item-view',
+        component: ProfileEditItem,
+      },
+    ]
+  },
+  {
+    path: '/moderator',
+    name: 'moderator-view',
+    component: ModeratorView,
+    children: [
+      {
+        path: '',
+        name: 'moderator-page-view',
+        component: ModeratorProfileView,
+      },
+      {
+        path: 'edit',
+        name: 'moderator-edit-view',
+        component: ModeratorEditItem,
+      },
+      {
+        path: 'confirm',
+        name: 'confirm-moderator-view',
+        component: ConfirmModeratorView,
+      },
+    ],
   },
 ]
+  // {
+  //   path: '/profile',
+  //   name: 'profile-view',
+  //   component: SelfProfileView,
+  // },
+  // {
+  //   path: '/profile/edit',
+  //   name: 'edit-profile-view',
+  //   component: EditProfileView,
+  // },
+  // {
+  //   path: '/moderator',
+  //   name: 'moderator-view',
+  //   component: ModeratorView,
+  // },
+
+
+
 
 // const routes = [
 //   {
