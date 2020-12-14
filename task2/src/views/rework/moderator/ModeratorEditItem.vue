@@ -2,7 +2,8 @@
     <div>
         Title: <input type="text" name="title" v-model="title">
         Body: <input type="text" name="title" v-model="body">
-        <button @click="edit_item">Edit</button>
+        <button @click="edit_item">edit</button>
+        <!-- <button @click="back">back</button> -->
         <router-link to="/moderator">back</router-link>  
     </div>
 </template>
@@ -27,7 +28,6 @@ export default {
         const {mode} = this.$route.query;
         this.mode = mode;
         this.url = 'http://127.0.0.1:8000/questions/api/moderator/' + this.mode + `/edit/?id=${this.item.id}`
-        console.log(this.url)
     },
     methods: {
         edit_item() {
@@ -46,7 +46,10 @@ export default {
                 console.log(res)
             })
             .catch(err => console.log(err))
-        }
+        },
+        // back() {
+        //     this.$router.push({name: 'moderator-page-view'});
+        // }
     }
 }
 </script>

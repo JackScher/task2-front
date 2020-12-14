@@ -13,11 +13,25 @@ import ProfileView from "@/views/rework/profile/ProfileView";
 import SelfProfileView from "@/views/rework/profile/SelfProfileView";
 import EditProfileView from "@/views/rework/profile/EditProfileView";
 import ProfileEditItem from "@/views/rework/profile/ProfileEditItem";
+import ForeignProfileView from "@/views/rework/profile/ForeignProfileView";
 
 import ModeratorView from "@/views/rework/moderator/ModeratorView";
 import ModeratorProfileView from "@/views/rework/moderator/ModeratorProfileView";
 import ModeratorEditItem from "@/views/rework/moderator/ModeratorEditItem";
 import ConfirmModeratorView from "@/views/rework/moderator/ConfirmModeratorView";
+
+import ChatView from "@/views/rework/chat/ChatView";
+import QuestionsListView from "@/views/rework/chat/QuestionsListView";
+import QuestionItemView from "@/views/rework/chat/QuestionItemView";
+import EditCommentView from "@/views/rework/chat/EditCommentView";
+import CreateCommentComment from "@/views/rework/chat/CreateCommentComment";
+import AddQuestionView from "@/views/rework/chat/AddQuestionView";
+import AddAnswerView from "@/views/rework/chat/AddAnswerView";
+import AddCommentView from "@/views/rework/chat/AddCommentView";
+
+import TagsView from "@/views/rework/tags/TagsView"
+import TagsListView from "@/views/rework/tags/TagsListView"
+import CreateTagView from "@/views/rework/tags/CreateTagView"
 
 
 Vue.use(VueRouter)
@@ -65,6 +79,11 @@ const routes = [
         name: 'profile-edit-item-view',
         component: ProfileEditItem,
       },
+      {
+        path: 'foreign',
+        name: 'foreign-profile-view',
+        component: ForeignProfileView,
+      },
     ]
   },
   {
@@ -89,22 +108,66 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/chat',
+    name: 'chat-view',
+    component: ChatView,
+    children: [
+      {
+        path: 'list',
+        name: 'questions-list',
+        component: QuestionsListView,
+      },
+      {
+        path: 'add',
+        name: 'add-question-view',
+        component: AddQuestionView,
+      },
+      {
+        path: 'item',
+        name: 'question-item-view',
+        component: QuestionItemView,
+      },
+      {
+        path: 'edit-comment',
+        name: 'edit-comment-view',
+        component: EditCommentView,
+      },
+      {
+        path: 'create-comment-comment',
+        name: 'create-comment-comment-view',
+        component: CreateCommentComment,
+      },
+      {
+        path: 'create-answer',
+        name: 'create-answer-view',
+        component: AddAnswerView,
+      },
+      {
+        path: 'create-comment',
+        name: 'create-comment-view',
+        component: AddCommentView,
+      },
+    ]
+  },
+  {
+    path: '/tags',
+    name: 'tags-view',
+    component: TagsView,
+    children: [
+      {
+        path: 'list',
+        name: 'tags-list-view',
+        component: TagsListView,
+      },
+      {
+        path: 'create',
+        name: 'tags-create-view',
+        component: CreateTagView,
+      },
+    ]
+  },
 ]
-  // {
-  //   path: '/profile',
-  //   name: 'profile-view',
-  //   component: SelfProfileView,
-  // },
-  // {
-  //   path: '/profile/edit',
-  //   name: 'edit-profile-view',
-  //   component: EditProfileView,
-  // },
-  // {
-  //   path: '/moderator',
-  //   name: 'moderator-view',
-  //   component: ModeratorView,
-  // },
 
 
 

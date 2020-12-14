@@ -3,13 +3,13 @@
         <header class="header">
             <router-link class="router" to="/profile">profile</router-link>
             <router-link class="router" to="/moderator">moderator</router-link>
-            <router-link class="router" to="#">chat</router-link>
+            <router-link class="router" to="/chat/list">chat</router-link>
         </header>
 
         <div>
             <hr>
             Questions: 
-            <div v-for="question in question_list" v-bind:key="question.id">
+            <div v-for="question in question_list" v-bind:key="'A'+question.id">
                 Title: {{question.title}}
                 Body: {{question.body}}
                 <button @click="current_question_edit(question)">Edit</button>
@@ -17,7 +17,7 @@
 
             <hr>
             Answers:
-            <div v-for="answer in answer_list" v-bind:key="answer.id">
+            <div v-for="answer in answer_list" v-bind:key="'B'+answer.id">
                 Title: {{answer.title}}
                 Body: {{answer.body}}
                 <button @click="current_answer_edit(answer)">Edit</button>

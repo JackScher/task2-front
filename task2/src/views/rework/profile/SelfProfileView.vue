@@ -3,7 +3,7 @@
         <header class="header">
             <router-link class="router" to="/profile">profile</router-link>
             <router-link v-if="profile[0].user_group==='moderator'" class="router" to="/moderator">moderator</router-link>
-            <router-link class="router" to="/">chat</router-link>
+            <router-link class="router" to="/chat/list">chat</router-link>
         </header>
 
         <div>

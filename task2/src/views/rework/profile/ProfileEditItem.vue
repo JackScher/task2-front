@@ -43,7 +43,8 @@ export default {
                 current_user_id: localStorage.getItem('user-id')
             }, {headers})
             .then(res => {
-                console.log(res)
+                console.log(res);
+                this.$router.push({name: 'self-profile-view'})
             })
             .catch(err => console.log(err))
         }
