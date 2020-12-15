@@ -16,13 +16,13 @@ export default {
     googleToken: null
   }),
   methods: {
-    OnGoogleAuthSuccess (idToken) {
-      console.log('UserGoogleId: '+ idToken);
-      this.googleToken = idToken
-      axios.post(`http://127.0.0.1:8000/auth-services/google/${this.googleToken}`, {
-        access_token: this.googleToken,
-      }).then(res => console.log(res))
-      .catch(err => console.log(err))
+    // OnGoogleAuthSuccess (idToken) {
+    //   console.log('UserGoogleId: '+ idToken);
+    //   this.googleToken = idToken
+    //   axios.post(`http://127.0.0.1:8000/auth-services/google/${this.googleToken}`, {
+    //     access_token: this.googleToken,
+    //   }).then(res => console.log(res))
+    //   .catch(err => console.log(err))
       // axios.post(`http://127.0.0.1:8000/auth-services/accounts/google/login`, {
       //   access_token: this.googleToken,
       // }).then(res => console.log(res))

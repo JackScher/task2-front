@@ -6,20 +6,23 @@
             <button type="submit">login</button>
             <router-link to="/register">register</router-link>
         </form>
-        
+        <button v-google-signin-button="clientId" @success="OnGoogleAuthSuccess" @error="OnGoogleAuthFail">
+            Continue with Google
+        </button>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-// import router from './router';
 
 export default {
     name: "LoginView",
     data() {
         return{
             login: null,
-            password: null
+            password: null,
+            googleToken: null,
+            clientId: '730249173496-cs79cmelhvjcgfqogrl7502au66finrs.apps.googleusercontent.com',
         }
     },
     methods: {
@@ -29,7 +32,6 @@ export default {
                 password: this.password,
             })
             .then(res => {
-                console.log(res.data);
                 localStorage.setItem('user-token', res.data.key)
                 localStorage.setItem('user-id', res.data.user.id)
                 this.$router.push({name: 'self-profile-view'})
@@ -39,6 +41,27 @@ export default {
                 localStorage.removeItem('user-token')
                 localStorage.removeItem('user-id')
             });
+        },
+        OnGoogleAuthSuccess (idToken) {
+            console.log(idToken);
+            this.googleToken = idToken
+            axios.post(`http://127.0.0.1:8000/auth-services/google/`, {
+                id_token: this.googleToken,
+            })
+            .then(res => {
+                localStorage.setItem('user-token', res.data['detail'].key)
+                localStorage.setItem('user-id', res.data['detail'].user.id)
+                this.$router.push({name: 'self-profile-view'})
+            })
+            .catch(err => console.log(err))
+
+        // axios.post(`http://127.0.0.1:8000/auth-services/accounts/google/login`, {
+        //   access_token: this.googleToken,
+        // }).then(res => console.log(res))
+        //     .catch(err => console.log(err))
+        },
+        OnGoogleAuthFail (error) {
+            console.log(error)
         }
     }
 }
