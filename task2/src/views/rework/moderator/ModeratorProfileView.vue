@@ -2,6 +2,7 @@
     <div>
         <header class="header">
             <router-link class="router" to="/profile">profile</router-link>
+            <router-link class="router" to="/skills/list">skills</router-link>
             <router-link class="router" to="/moderator">moderator</router-link>
             <router-link class="router" to="/chat/list">chat</router-link>
         </header>

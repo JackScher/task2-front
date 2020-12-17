@@ -33,6 +33,13 @@ import TagsView from "@/views/rework/tags/TagsView"
 import TagsListView from "@/views/rework/tags/TagsListView"
 import CreateTagView from "@/views/rework/tags/CreateTagView"
 
+import SkillView from "@/views/rework/skills/SkillView"
+import SkillsListView from "@/views/rework/skills/SkillsListView"
+import SkillItemView from "@/views/rework/skills/SkillItemView"
+import SkillAddTagView from "@/views/rework/skills/SkillAddTagView"
+import AddSkillView from "@/views/rework/skills/AddSkillView"
+
+
 
 Vue.use(VueRouter)
 
@@ -164,6 +171,33 @@ const routes = [
         path: 'create',
         name: 'tags-create-view',
         component: CreateTagView,
+      },
+    ]
+  },
+  {
+    path: '/skills',
+    name: 'skills-view',
+    component: SkillView,
+    children: [
+      {
+        path: 'list',
+        name: 'skills-list',
+        component: SkillsListView,
+      },
+      {
+        path: 'item',
+        name: 'skill-item',
+        component: SkillItemView,
+      },
+      {
+        path: 'add_tag',
+        name: 'skill-add-tag',
+        component: SkillAddTagView,
+      },
+      {
+        path: 'add',
+        name: 'add-skill',
+        component: AddSkillView,
       },
     ]
   },

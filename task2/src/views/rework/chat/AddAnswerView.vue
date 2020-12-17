@@ -42,7 +42,7 @@ export default {
                 question_id: this.question_id,
                 user_id: localStorage.getItem('user-id')
             }, {headers})
-            .then(res => console.log(res))
+            .then(res => this.back())
             .catch(err => console.log(err))
         },
         back() {

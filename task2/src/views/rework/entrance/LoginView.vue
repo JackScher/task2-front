@@ -9,6 +9,9 @@
         <button v-google-signin-button="clientId" @success="OnGoogleAuthSuccess" @error="OnGoogleAuthFail">
             Continue with Google
         </button>
+        <button @click="linkedin_check">
+            Linkedin
+        </button>
     </div>
 </template>
 
@@ -62,6 +65,11 @@ export default {
         },
         OnGoogleAuthFail (error) {
             console.log(error)
+        },
+        linkedin_check() {
+            axios.get(`www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78z5p6percm8do&redirect_uri=https%example.com%auth%callback&scope=r_liteprofile%20r_emailaddress%20w_member_social`)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
         }
     }
 }

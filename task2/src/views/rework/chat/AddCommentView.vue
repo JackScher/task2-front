@@ -49,7 +49,7 @@ export default {
             .catch(err => console.log(err))
         },
         back() {
-            this.$router.push({name: "question-item-view", query: {id: this.item_id}});
+            this.$router.push({name: "question-item-view", query: {id: this.question_id}});
         }
     }
 
