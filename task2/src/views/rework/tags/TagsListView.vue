@@ -43,12 +43,13 @@ export default {
             .catch(err => console.log(err))
         },
         delete_tag(tag) {
-            let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
             let value = 'Token '+localStorage.getItem('user-token')
-            headers['Authorization'] = value
-            axios.put(`http://127.0.0.1:8000/questions/api/tag/delete/?id=${tag.id}`, {
-                id: tag.id
-            }, {headers})
+            axios.delete(`http://127.0.0.1:8000/questions/api/tag/delete/${tag.id}`,
+            {
+                headers: {
+                    Authorization: value
+                }
+            })
             .then(res => this.tag_list())
             .catch(err => console.log(err))
         },

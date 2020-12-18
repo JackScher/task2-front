@@ -57,19 +57,15 @@ export default {
         edit_skill_method(skill_id) {
             this.$router.push({name: 'skill-item', query: {skill_id: skill_id}})
         },
-
-
         delete_skill_method(skill_id) {
-
-            let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
-            let value = 'Token '+ localStorage.getItem('user-token')
-            headers['Authorization'] = value
-            // console.log(headers);
-            
-            axios.delete(`http://127.0.0.1:8000/questions/api/skills/delete/`, {
-                id: skill_id
-            }, {headers})
-            .then(res => this.tag_list())
+            let value = 'Token '+ localStorage.getItem('user-token');
+            axios.delete(`http://127.0.0.1:8000/questions/api/skills/delete/${skill_id}`,
+            {
+                headers: {
+                    Authorization: value
+                }
+            })
+            .then(res => this.get_skills_list())
             .catch(err => console.log(err))
         }
     }
@@ -84,6 +80,3 @@ export default {
         margin: 15px;
     }
 </style>
-
-
-

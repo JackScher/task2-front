@@ -9,6 +9,7 @@
                 <button @click="add_tag_to_new_skill(tag)">add</button>
             </div>
             <button @click="create_new_skill">create</button>
+            <button @click="back">back</button>
         </div>
     </div>
 </template>
@@ -46,7 +47,7 @@ export default {
                 }
             }
             if (!in_array) {
-                this.chosen_tags.push(tag);
+                this.chosen_tags.push(tag.id);
             }
             console.log(this.chosen_tags);
         },
@@ -55,15 +56,19 @@ export default {
             let token = 'Token ' + localStorage.getItem('user-token')
             headers['Authorization'] = token
 
-            axios.post('http://127.0.0.1:8000/questions/api/skills/create/', {
+            axios.post('http://127.0.0.1:8000/questions/api/skills/', {
                 name: this.skill_name,
                 user_id: localStorage.getItem('user-id'),
                 tag_id: this.chosen_tags
             }, {headers})
             .then(res => {
-                console.log(res)
+                console.log(res);
+                this.back();
             })
             .catch(err => console.log(err))
+        },
+        back() {
+            this.$router.push({name: 'skills-list'});
         }
     }
 }
