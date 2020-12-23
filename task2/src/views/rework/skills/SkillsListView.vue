@@ -41,7 +41,6 @@ export default {
         get_skills_list() {
             axios.get('http://127.0.0.1:8000/questions/api/skills')
             .then(res => {
-                console.log(res.data)
                 this.skills = res.data
             })
             .catch(err => console.log(err))

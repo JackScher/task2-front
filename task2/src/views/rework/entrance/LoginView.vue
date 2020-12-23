@@ -9,8 +9,8 @@
         <button v-google-signin-button="clientId" @success="OnGoogleAuthSuccess" @error="OnGoogleAuthFail">
             Continue with Google
         </button>
-        <button @click="linkedin_check">
-            Linkedin
+        <button @click="LinkedinGetMethod">
+            Continue with Linkedin
         </button>
     </div>
 </template>
@@ -25,8 +25,22 @@ export default {
             login: null,
             password: null,
             googleToken: null,
+
+            url: null,
+            linkedinClientId: '78z5p6percm8do',
+            linkedinClientSecret: '0iRzy06o3PN0fG0P',
+            redirectURI: 'http://localhost:8080',
+            urlEncode: 'http%3A%2F%2Flocalhost%3A8080',
+            code: null,
             clientId: '730249173496-cs79cmelhvjcgfqogrl7502au66finrs.apps.googleusercontent.com',
+            linkedin_url: 'https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78z5p6percm8do&scope=r_liteprofile%20r_emailaddress&redirect_uri=http%3A%2F%2Flocalhost%3A8080'
         }
+    },
+    mounted() {
+        const {code} = this.$route.query;
+        this.code = code;
+        this.url = 'https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code='+ this.code + '&redirect_uri=' + this.urlEncode + '&client_id=' + this.linkedinClientId + '&client_secret='+ this.linkedinClientSecret
+        this.linkedin_check();
     },
     methods: {
         login_method() {
@@ -66,10 +80,21 @@ export default {
         OnGoogleAuthFail (error) {
             console.log(error)
         },
+        LinkedinGetMethod() {
+            window.open(this.linkedin_url);
+        },
         linkedin_check() {
-            axios.get(`www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78z5p6percm8do&redirect_uri=https%example.com%auth%callback&scope=r_liteprofile%20r_emailaddress%20w_member_social`)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+            if (this.code) {
+                axios.post('http://127.0.0.1:8000/auth-services/linkedin/', {
+                    code: this.code,
+                })
+                .then(res => {
+                    localStorage.setItem('user-token', res.data['detail'].key)
+                    localStorage.setItem('user-id', res.data['detail'].user.id)
+                    this.$router.push({name: 'self-profile-view'})
+                })
+                .catch(err => console.log(err))
+            }
         }
     }
 }

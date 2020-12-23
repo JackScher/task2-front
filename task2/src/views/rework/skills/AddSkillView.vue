@@ -7,7 +7,7 @@
             <div v-for="tag in tags" v-bind:key="tag.id">
                 {{tag.name}}
                 <button @click="add_tag_to_new_skill(tag)">add</button>
-            </div>
+            </div><br>
             <button @click="create_new_skill">create</button>
             <button @click="back">back</button>
         </div>
@@ -49,7 +49,6 @@ export default {
             if (!in_array) {
                 this.chosen_tags.push(tag.id);
             }
-            console.log(this.chosen_tags);
         },
         create_new_skill() {
             let headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
@@ -62,7 +61,6 @@ export default {
                 tag_id: this.chosen_tags
             }, {headers})
             .then(res => {
-                console.log(res);
                 this.back();
             })
             .catch(err => console.log(err))
