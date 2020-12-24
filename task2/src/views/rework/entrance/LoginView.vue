@@ -60,7 +60,6 @@ export default {
             });
         },
         OnGoogleAuthSuccess (idToken) {
-            console.log(idToken);
             this.googleToken = idToken
             axios.post(`http://127.0.0.1:8000/auth-services/google/`, {
                 id_token: this.googleToken,
@@ -71,11 +70,6 @@ export default {
                 this.$router.push({name: 'self-profile-view'})
             })
             .catch(err => console.log(err))
-
-        // axios.post(`http://127.0.0.1:8000/auth-services/accounts/google/login`, {
-        //   access_token: this.googleToken,
-        // }).then(res => console.log(res))
-        //     .catch(err => console.log(err))
         },
         OnGoogleAuthFail (error) {
             console.log(error)

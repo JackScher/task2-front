@@ -30,7 +30,6 @@ export default {
             axios.get(`http://127.0.0.1:8000/questions/api/tags/`)
             .then(res => {
                     this.tags = res.data;
-                    console.log(this.tags)
                 })
             .catch(err => console.log(err))
         },

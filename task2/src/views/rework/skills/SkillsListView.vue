@@ -17,6 +17,7 @@
             Name:{{ skill.name }}
             <button @click="edit_skill_method(skill.id)">edit</button>
             <button @click="delete_skill_method(skill.id)">delete</button>
+            <button @click="get_questions_method(skill.id)">find questions</button>
             <hr>
         </div>
     </div>
@@ -30,16 +31,16 @@ export default {
     data() {
         return{
             profile: null,
-            skills: null
+            skills: null,
+            tags: null
         }
     },
     mounted() {
         this.get_self_profile();
-        this.get_skills_list();
     },
     methods: {
         get_skills_list() {
-            axios.get('http://127.0.0.1:8000/questions/api/skills')
+            axios.get(`http://127.0.0.1:8000/questions/api/skills/?ordering=-id&user_id=${this.profile[0].id}`)
             .then(res => {
                 this.skills = res.data
             })
@@ -49,7 +50,8 @@ export default {
             this.id = localStorage.getItem('user-id');
             axios.get(`http://127.0.0.1:8000/rest-auth/api/users/?id=${this.id}`, {})
             .then(res => {
-                this.profile = res.data
+                this.profile = res.data;
+                this.get_skills_list();
             })
             .catch(err => console.log(err))
         },
@@ -66,6 +68,22 @@ export default {
             })
             .then(res => this.get_skills_list())
             .catch(err => console.log(err))
+        },
+        get_questions_method(id) {
+            axios.get(`http://127.0.0.1:8000/questions/api/skills/${id}`)
+            .then(res => {
+                    this.tags = res.data['tag_id'];
+                    // console.log(this.tags)
+                    let route_queries = '';
+                    for(let i=0; i<this.tags.length; i++){
+                        // console.log(this.tags[i]['id'])
+                        route_queries += '&tags=' + this.tags[i]['id'];
+                    }
+                    // console.log(route_queries);
+                    this.$router.push({name: 'questions-list', query: {queries: route_queries}})
+                })
+            .catch(err => console.log(err))
+        
         }
     }
 }

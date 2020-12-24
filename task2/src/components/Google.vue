@@ -27,7 +27,7 @@ export default {
       //   access_token: this.googleToken,
       // }).then(res => console.log(res))
       //     .catch(err => console.log(err))
-    },
+    // },
     OnGoogleAuthFail (error) {
       console.log(error)
     }

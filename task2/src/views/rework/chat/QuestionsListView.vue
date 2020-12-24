@@ -40,16 +40,23 @@ export default {
         return{
             questions: null,
             id: null,
-            profile: null
+            profile: null,
+            queries: null,
+            url: 'http://127.0.0.1:8000/questions/api/questions/?ordering=-date_create'
         }
     },
     mounted() {
+        const {queries} = this.$route.query;
+        this.queries = queries;
         this.get_self_profile();
         this.get_questions_list();
     },
     methods: {
         get_questions_list() {
-            axios.get('http://127.0.0.1:8000/questions/api/questions/', {})
+            if (this.queries) {
+                this.url += this.queries;
+            }
+            axios.get(this.url, {})
             .then(res => { 
                 this.questions=res.data
             })
